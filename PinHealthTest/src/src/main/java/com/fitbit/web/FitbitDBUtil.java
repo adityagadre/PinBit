@@ -26,7 +26,7 @@ public class FitbitDBUtil {
 			try {
 				connect = DriverManager.getConnection("jdbc:mysql://54.193.91.8/market","abc","a");
 
-				PreparedStatement ps=(PreparedStatement) connect.prepareStatement("insert into patient values(default,?,?,?);" );
+				PreparedStatement ps=(PreparedStatement) connect.prepareStatement("insert into patient values(default,?,?,?,?);" );
 				
 				ps.setString(1, userInfo.getFullName());
 				ps.setString(2, oauthToken);
@@ -41,7 +41,7 @@ public class FitbitDBUtil {
 		// TODO Auto-generated method stub
 	}
 	
-	public static Properties getUser(String id)
+	public static Properties getUserProperties(String id)
 	{
 		Properties p=new Properties();
 		
