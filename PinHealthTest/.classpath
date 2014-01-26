@@ -13,6 +13,11 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="lib" path="C:/Users/Sachin/Documents/hackathon/fitbit4j-1.0.25.jar"/>
+	<classpathentry kind="lib" path="D:/hacktech/pinbit/PinBit/lib/commons-logging-1.1.3.jar"/>
+	<classpathentry kind="lib" path="D:/hacktech/pinbit/PinBit/lib/fitbit4j-1.0.25.jar"/>
+	<classpathentry kind="lib" path="D:/hacktech/pinbit/PinBit/lib/java-json.jar"/>
+	<classpathentry kind="lib" path="D:/hacktech/pinbit/PinBit/lib/joda-time-2.3.jar"/>
+	<classpathentry kind="lib" path="D:/hacktech/mysql-connector-java-5.1.28/mysql-connector-java-5.1.28/mysql-connector-java-5.1.28-bin.jar"/>
+	<classpathentry kind="lib" path="D:/hacktech/pinbit/PinBit/lib/commons-lang-2.6.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
