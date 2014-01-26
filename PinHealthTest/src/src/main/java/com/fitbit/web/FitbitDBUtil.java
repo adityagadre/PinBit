@@ -39,12 +39,18 @@ public class FitbitDBUtil {
 				}
 				else
 				{
-					PreparedStatement ps=(PreparedStatement) connect.prepareStatement("insert into patient values(default,?,?,?,?);" );
+					PreparedStatement ps=(PreparedStatement) connect.prepareStatement("insert into patient values(default,?,?,?,?,?,?,?,?,?,?);" );
 					
 					ps.setString(1, userInfo.getFullName());
 					ps.setString(2, oauthToken);
 					ps.setString(3, oauthVerifier);
 					ps.setString(4, userInfo.getEncodedId());
+					ps.setFloat(5, 60);
+					ps.setFloat(6, 70);
+					ps.setInt(7, 61);
+					ps.setInt(8, 62);
+					ps.setInt(9, 63);
+					ps.setInt(10, 64);
 					ps.executeUpdate();	
 				}
 				
