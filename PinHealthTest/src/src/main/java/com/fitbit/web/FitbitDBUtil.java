@@ -4,9 +4,13 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.Properties;
+
+import org.joda.time.LocalDate;
+import org.joda.time.Years;
 
 import com.fitbit.api.common.model.user.UserInfo;
 import com.mysql.jdbc.PreparedStatement;
@@ -14,7 +18,7 @@ import com.mysql.jdbc.Statement;
 
 public class FitbitDBUtil {
 
-	public static void addUserInfo(UserInfo userInfo, String oauthToken,
+	public static void addUserInfo(Properties p, String oauthToken,
 			String oauthVerifier) {
 			try {
 				Class.forName("com.mysql.jdbc.Driver");
@@ -23,34 +27,45 @@ public class FitbitDBUtil {
 				e.printStackTrace();
 			}
 			Connection connect;
+			boolean b=false;
 			try {
 				connect = DriverManager.getConnection("jdbc:mysql://54.193.91.8/market","abc","a");
 
 				Statement s=(Statement) connect.createStatement();
-				ResultSet rs=s.executeQuery("select * from patient where encodedId='" + userInfo.getEncodedId() + "'");
-				
-				if(rs.next())
+				ResultSet rs=s.executeQuery("select * from patient where encodedId='" + p.getProperty("encodedId") + "'");
+			if(rs.next())
+			{
+				b=rs.getBoolean("uploaded");
+			}
+				/*if(rs.next())
 				{
+					
 					PreparedStatement ps=(PreparedStatement) connect.prepareStatement("update patient set auth_token=?,auth_verifier=? where encodedId=?" );
 					ps.setString(1, oauthToken);
 					ps.setString(2, oauthVerifier);
 					ps.setString(3, userInfo.getEncodedId());
 					ps.executeUpdate();
-				}
-				else
-				{
-					PreparedStatement ps=(PreparedStatement) connect.prepareStatement("insert into patient values(default,?,?,?,?,?,?,?,?,?,?);" );
 					
-					ps.setString(1, userInfo.getFullName());
+				}
+				else*/
+				{
+					PreparedStatement ps=(PreparedStatement) connect.prepareStatement("insert into patient values(default,?,?,?,?,?,?,?,?,?,?,?,?,?);" );
+					
+					ps.setString(1, p.getProperty("fullname"));
 					ps.setString(2, oauthToken);
 					ps.setString(3, oauthVerifier);
-					ps.setString(4, userInfo.getEncodedId());
-					ps.setFloat(5, 60);
-					ps.setFloat(6, 70);
-					ps.setInt(7, 61);
-					ps.setInt(8, 62);
-					ps.setInt(9, 63);
-					ps.setInt(10, 64);
+					ps.setString(4, p.getProperty("encodedId"));
+					ps.setString(5, p.getProperty("blood_pressure"));
+					ps.setString(6, p.getProperty("heart_beat"));
+					ps.setString(7, p.getProperty("weight"));
+					ps.setString(8, p.getProperty("height"));
+					LocalDate d=new LocalDate();
+					LocalDate d1=LocalDate.parse(p.getProperty("dob"));
+					ps.setInt(9,  Years.yearsBetween(d1,d).getYears());
+					ps.setString(10, p.getProperty("sleeptime"));
+					ps.setString(11, p.getProperty("distance"));
+					ps.setString(12, p.getProperty("floors"));
+					ps.setBoolean(13, b);
 					ps.executeUpdate();	
 				}
 				
