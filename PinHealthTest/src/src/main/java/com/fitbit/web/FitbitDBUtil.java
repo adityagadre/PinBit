@@ -69,9 +69,11 @@ public class FitbitDBUtil {
 			Statement s=(Statement) connect.createStatement();
 			ResultSet rs=s.executeQuery("select * from patient where encodedId='" + id + "'");
 			
-			rs.first();
-			p.setProperty("auth_token", rs.getString(2));
-			p.setProperty("auth_verifier", rs.getString(3));
+			if(rs.next())
+			{
+				p.setProperty("auth_token", rs.getString(2));
+				p.setProperty("auth_verifier", rs.getString(3));
+			}
 			rs.close();
 			
 		} catch (ClassNotFoundException e) {
