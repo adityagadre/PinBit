@@ -37,7 +37,8 @@ public class FitbitDBUtil {
 			{
 				b=rs.getBoolean("uploaded");
 			}
-			 rs=s.executeQuery("delete from patient where encodedId='" + p.getProperty("encodedId") + "'");
+			
+			 s.execute("delete from patient where encodedId='" + p.getProperty("encodedId") + "'");
 				/*if(rs.next())
 				{
 					
