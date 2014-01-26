@@ -26,13 +26,29 @@ public class FitbitDBUtil {
 			try {
 				connect = DriverManager.getConnection("jdbc:mysql://54.193.91.8/market","abc","a");
 
-				PreparedStatement ps=(PreparedStatement) connect.prepareStatement("insert into patient values(default,?,?,?,?);" );
+				Statement s=(Statement) connect.createStatement();
+				ResultSet rs=s.executeQuery("select * from patient where encodedId='" + userInfo.getEncodedId() + "'");
 				
-				ps.setString(1, userInfo.getFullName());
-				ps.setString(2, oauthToken);
-				ps.setString(3, oauthVerifier);
-				ps.setString(4, userInfo.getEncodedId());
-				ps.executeUpdate();
+				if(rs.next())
+				{
+					PreparedStatement ps=(PreparedStatement) connect.prepareStatement("update patient set auth_token=?,auth_verifier=? where encodedId=?" );
+					ps.setString(1, oauthToken);
+					ps.setString(2, oauthVerifier);
+					ps.setString(3, userInfo.getEncodedId());
+					ps.executeUpdate();
+				}
+				else
+				{
+					PreparedStatement ps=(PreparedStatement) connect.prepareStatement("insert into patient values(default,?,?,?,?);" );
+					
+					ps.setString(1, userInfo.getFullName());
+					ps.setString(2, oauthToken);
+					ps.setString(3, oauthVerifier);
+					ps.setString(4, userInfo.getEncodedId());
+					ps.executeUpdate();	
+				}
+				
+				
 				connect.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -51,7 +67,6 @@ public class FitbitDBUtil {
 			Connection connect = DriverManager.getConnection("jdbc:mysql://54.193.91.8/market","abc","a");
 
 			Statement s=(Statement) connect.createStatement();
-			
 			ResultSet rs=s.executeQuery("select * from patient where encodedId='" + id + "'");
 			
 			rs.first();
