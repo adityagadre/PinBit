@@ -71,8 +71,8 @@ public class FitbitDBUtil {
 			
 			if(rs.next())
 			{
-				p.setProperty("auth_token", rs.getString(2));
-				p.setProperty("auth_verifier", rs.getString(3));
+				p.setProperty("auth_token", rs.getString(3));
+				p.setProperty("auth_verifier", rs.getString(4));
 			}
 			rs.close();
 			
