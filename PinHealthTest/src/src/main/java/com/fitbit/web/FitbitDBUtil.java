@@ -31,6 +31,7 @@ public class FitbitDBUtil {
 				ps.setString(1, userInfo.getFullName());
 				ps.setString(2, oauthToken);
 				ps.setString(3, oauthVerifier);
+				ps.setString(4, userInfo.getEncodedId());
 				ps.executeUpdate();
 				connect.close();
 			} catch (SQLException e) {
@@ -40,7 +41,7 @@ public class FitbitDBUtil {
 		// TODO Auto-generated method stub
 	}
 	
-	public static Properties getUser(int id)
+	public static Properties getUser(String id)
 	{
 		Properties p=new Properties();
 		
@@ -51,7 +52,7 @@ public class FitbitDBUtil {
 
 			Statement s=(Statement) connect.createStatement();
 			
-			ResultSet rs=s.executeQuery("select * from patient where id=" + id);
+			ResultSet rs=s.executeQuery("select * from patient where encodedId='" + id + "'");
 			
 			rs.first();
 			p.setProperty("auth_token", rs.getString(2));
